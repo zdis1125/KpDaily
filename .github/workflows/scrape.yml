@@ -20,7 +20,7 @@ jobs:
           Rscript -e 'install.packages(c("rvest", "dplyr", "httr"))'
 
       - name: Run Scraper
-        run: Rscript scraper.R
+        run: Rscript Scraper.R
 
       - name: Commit and Push results
         run: |
