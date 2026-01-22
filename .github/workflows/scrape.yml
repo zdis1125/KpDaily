@@ -17,7 +17,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          Rscript -e 'install.packages(c("rvest", "dplyr", "httr"))'
+          Rscript -e 'install.packages(c("dplyr", "httr"))'
 
       - name: Run Scraper
         run: Rscript Scraper.R
