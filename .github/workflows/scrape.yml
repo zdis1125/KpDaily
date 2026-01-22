@@ -27,7 +27,6 @@ jobs:
             rvest
             dplyr
             httr
-            polite
 
       - name: Run script
         run: Rscript Scraper.R # REPLACE with your actual file name
