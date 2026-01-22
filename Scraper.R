@@ -1,4 +1,3 @@
-library(rvest)
 library(dplyr)
 library(httr)
 
