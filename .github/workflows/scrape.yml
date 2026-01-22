@@ -22,9 +22,6 @@ jobs:
         shell: Rscript {0}
 
       - name: Run Scraper
-        run: Rscript scraper.R
-
-      - name: Run Scraper
         run: Rscript Scraper.R
 
       - name: Commit and Push results
