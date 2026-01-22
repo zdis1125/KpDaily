@@ -1,4 +1,4 @@
-ame: Scrape CBB Stats
+name: Scrape CBB Stats
 
 on:
   schedule:
