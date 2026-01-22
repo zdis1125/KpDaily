@@ -4,11 +4,11 @@ library(httr)
 
 # Define the URL and the User Agent
 url <- "https://kenpom.com/"
-ua <- user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
 
-# Scrape the data
-response <- GET(url, ua)
-page <- read_html(response)
+user_agent_string <- "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+
+# Wrap your request with the user_agent configuration
+page <- read_html(GET(url, user_agent(user_agent_string)))
 
  Ranks <- page %>%
         html_nodes(".hard_left") %>%
