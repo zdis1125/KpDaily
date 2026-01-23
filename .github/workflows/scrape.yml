@@ -10,9 +10,7 @@ on:
 jobs:
   autoscrape:
     runs-on: ubuntu-latest
-    env:
-      REPO_NAME: ${{ github.event.repository.name }}
-      RSPM: "https://packagemanager.posit.co/cran/__linux__/jammy/latest"
+    container: rocker/tidyverse:latest
       
     steps:
       - name: Checkout code
