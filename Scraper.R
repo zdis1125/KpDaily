@@ -2,28 +2,33 @@ library(rvest)
 library(dplyr)
 library(httr)
 
-
-# Define the URL and the User Agent
 url <- "https://kenpom.com/"
 
+# 1. Expand your headers. 
+# We add 'Accept' and 'Accept-Language' to look like a standard browser.
+response <- GET(
+  url, 
+  add_headers(
+    `User-Agent` = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    `Accept` = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    `Accept-Language` = "en-US,en;q=0.5",
+    `Referer` = "https://www.google.com/" # Pretend we came from Google
+  )
+)
 
-my_ua <- "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36"
-url <- "https://kenpom.com/"
+# 2. Check if we actually got in
+if (status_code(response) != 200) {
+  stop(paste("Access denied! Status code:", status_code(response)))
+}
 
-# Use GET with your User Agent
-response <- GET(url, user_agent(my_ua))
-
-# Now read the HTML
 page <- read_html(response)
 
+# 3. Your scraping logic (Keep this the same)
+Ranks <- page %>% html_nodes(".hard_left") %>% html_text()
+Teams <- page %>% html_nodes(".next_left") %>% html_text()
 
-Ranks <- page %>%
-  html_nodes(".hard_left") %>%
-  html_text()
+# KenPom tables often have header rows repeated; let's clean it slightly
+dat <- data.frame(Ranks, Teams) %>%
+  filter(Ranks != "Rank") # Removes the table headers that look like data
 
-Teams <- page %>%
-  html_nodes(".next_left") %>%
-  html_text()
-
-dat <- cbind(Ranks,Teams)
 write.csv(dat, "cbb_stats.csv", row.names = FALSE)
