@@ -3,21 +3,14 @@ library(dplyr)
 library(httr)
 
 url <- "https://kenpom.com/"
-proxy_url <- "69.48.201.94:80"
+my_ua <- "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 
-# 1. Expand your headers. 
-# We add 'Accept' and 'Accept-Language' to look like a standard browser.
-response <- GET(
-  url,
-  use_proxy(proxy_url),
-  add_headers(
-    `User-Agent` = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    `Accept` = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-    `Accept-Language` = "en-US,en;q=0.5",
-    `Referer` = "https://www.google.com/" # Pretend we came from Google
-  )
-)
+# If you use a service like ScraperAPI (they have a free tier), 
+# you literally just change the URL:
+api_key <- "8482d338-e81b-4295-ada1-8b0d950ef5d7"
+proxy_url <- paste0("http://api.scraperapi.com?api_key=", api_key, "&url=", url)
 
+response <- GET(proxy_url) # The API uses its own clean IPs to hit KenPom for you
 page <- read_html(response)
 
 # 3. Your scraping logic (Keep this the same)
