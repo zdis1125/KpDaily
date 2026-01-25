@@ -25,4 +25,4 @@ Teams <- page %>%
 
 df <- cbind(Ranks,Teams)
 
-write.csv(df)
+write.csv(df, "cbb_stats.csv")
