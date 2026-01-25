@@ -21,3 +21,8 @@ Ranks <- page %>%
 Teams <- page %>%
   html_nodes(".next_left") %>%
   html_text()
+
+
+df <- cbind(Ranks,Teams)
+
+write.csv(df)
